@@ -11,8 +11,8 @@
 /data
 .~*
 common/CACHE
-bakerydemo/settings/local.py
-bakerydemodb
+aosc/settings/local.py
+aoscdb
 __pycache__
 .vagrant/
 /.vagrant/
