@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% load wagtailcore_tags navigation_tags wagtailimages_tags %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>{{ page.title }}</h1>
+                <p>{{ page.introduction}}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row bread-list">
+        {% for project in projects %}
+            <a href="{% pageurl project %}" class="col-xs-12 col-md-6 bread-list-item">
+                <div class="row">
+                    <div class="col-xs-4 col-sm-4 image">
+                        {% image project.image fill-180x180-c100 as image %}
+                        <img src="{{ image.url }}" width="{{ image.width }}"
+                            height="{{ image.height }}" alt="{{ image.alt }}" class="" />
+                    </div>
+                    <div class="col-xs-6 col-sm-7">
+                        <h2>{{ project.title }}</h2>
+                        <ul class="bread-meta mb-0">
+                        {% with segments=project.segments.all %}
+                                {% if segments %}
+                                    {% for segment in segments|slice:":2  " %}
+                                    <li><small>{{ segment }}</small></li>
+                                    {% endfor %}    
+                                {% endif %}
+                        {% endwith %}
+                        </ul>
+                    </div>
+                </div>
+            </a>
+        {% endfor %}
+        </div>
+    </div>
+
+    {% if projects.paginator.count > 1 %}
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                {% include "includes/pagination.html" with subpages=projects %}
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endblock content %}

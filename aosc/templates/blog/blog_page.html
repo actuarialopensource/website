@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% load navigation_tags wagtailimages_tags blogapp_tags %}
+
+{% block content %}
+
+    {% image self.image fill-1920x600 as hero_img %}
+        {% include "base/include/header-hero.html" %}
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                {% if page.introduction %}
+                    <p class="intro">{{ page.introduction }}</p>
+                {% endif %}
+
+                {{ page.body }}
+            
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-8">
+                <div class="blog-meta">
+                    {% if page.authors %}
+                        <div class="blog-avatars">
+                            {% for author in page.authors %}
+                                <div class="author">{% image author.image fill-50x50-c100 class="blog-avatar" %}
+                                {{ author.first_name }} {{ author.last_name }}</div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+
+                    {% if page.date_published %}
+                        <div class="blog-byline">
+                            {{ page.date_published }}
+                        </div>
+                    {% endif %}
+                </div>
+
+                {% if page.get_tags %}
+                    Tagged with:<br />
+                    {% for tag in page.get_tags  %}
+                        <a href="{{ tag.url }}" class="btn btn-sm">{{ tag }}</a>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-8"> 
+                {% show_comments %}
+            </div>
+        </div>
+    </div>
+{% endblock content %}

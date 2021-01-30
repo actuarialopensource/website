@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% load wagtailimages_tags wagtailcore_tags %}
+
+{% block content %}
+<div class="homepage">
+    
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                {% if posts %}
+                    {% for blog in posts %}
+                    <div class="home-post">
+                        <div class="small footer">
+                            {% for author in blog.authors %}
+                                {{ author }}{% if not forloop.last %}, {% endif %}
+                            {% endfor %}
+                                - 
+                            {% if blog.date_published %}
+                                {{ blog.date_published }}
+                            {% endif %}
+                        </div>
+                        <div class="text">
+                            <a href="{% pageurl blog %}"><h2 class="blog-list-title">{{ blog.title }}</h2></a>
+                            <p class="home-intro">{{ blog.subtitle|truncatewords:15 }}</p>
+                        </div>
+                        <div class="image">
+                            {% image blog.image fill-850x450-c50 as image %}
+                            <img src="{{ image.url }}" width="{{ image.width }}" height="{{ image.height }}" alt="{{ image.alt }}" class="rounded" />
+                        </div>
+                        <div class="text">
+                            {% if blog.introduction %}
+                                <p>{{ blog.introduction|truncatewords:150 }}</p>
+                            {% else %}
+                                <p>{{ blog.body|truncatewords:150 }}</p>
+                            {% endif %}
+                        </div>
+                        <a href="{% pageurl blog %}"><p class="article-link">Continue Reading...</p></a>
+                        {% if blog.get_tags %}
+                            <div class="small footer">
+                                Tags:{% for tag in blog.get_tags  %}
+                                    <a href="{{ tag.url }}" class="btn btn-sm mx-1">{{ tag }}</a>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                    <hr>
+                {% endfor %}
+            {% endif %}
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock content %}

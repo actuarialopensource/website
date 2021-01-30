@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% load wagtailimages_tags %}
+
+{% block content %}
+    <div class="container bread-detail">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-6">
+                    <div class="row">
+                        <h1>{{ page.title }}</h1>
+
+                        <figure class="hidden-md-up">
+                            {% image page.image width-500 %}
+                        </figure>
+
+                        {% if page.introduction %}
+                            <p class="introduction">
+                                {{ page.introduction }}
+                            </p>
+                        {% endif %}
+
+                        {{ page.body }}
+                    </div>
+                </div>
+
+                <div class="col-md-5 col-md-offset-1">
+                    <div class="row">
+                        <figure class="hidden-md-down">
+                            {% image page.image width-500 %}
+                        </figure>
+                        <ul class="bread-meta">
+                            {% with segments=page.segment.all %}
+                                {% if segments %}
+                                    <li>
+                                        <h4>Segments</h4>
+                                        <ul>
+                                            {% for segment in segments %}
+                                                <li>
+                                                    {{ segment.name }}
+                                                </li>
+                                            {% endfor %}
+                                        </ul>
+                                    </li>
+                                {% endif %}
+                            {% endwith %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

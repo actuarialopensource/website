@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% load wagtailcore_tags %}
+
+{% block content %}
+{% include "base/include/header-hero.html" %}
+
+<div class="container form-page-thanks">
+    <div class="row">
+        <div class="col-md-7">
+            {{ page.thank_you_text|richtext }}
+        </div>
+    </div>
+</div>
+{% endblock content %}
